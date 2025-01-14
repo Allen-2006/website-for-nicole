@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<style>
+    /* Color container
+    #cf00ac
+    */
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #111;
+        color: #f77e9c;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .status-bar {
+        position: absolute;
+        top: 6%;
+        left: 3%;
+        width: 92%;
+        height: 24px;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+        color: black;
+        font-family: monospace;
+        font-size: 10px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 10px;
+        z-index: 1;
+    }
+
+    .status-item {
+        margin-left: 15px;
+    }
+
+    .battery-icon {
+        width: 25px;
+        height: 12px;
+        border: 1px solid black;
+        position: relative;
+        display: inline-block;
+        border-radius: 2px;
+        margin-left: 5px;
+    }
+
+    .battery-level {
+        width: 69%;
+        height: 100%;
+        background-color: black;
+    }
+
+    .battery-cap {
+        width: 2px;
+        height: 4px;
+        background-color: black;
+        position: absolute;
+        right: -3px;
+        top: 3px;
+    }
+
+    .relationship-clock {
+        position: absolute;
+        top: 65%;
+        left: 17.5%;
+        transform: translate(-50%, -50%);
+        width: 20%;
+        height: 10%;
+        background-color: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 0 15px rgba(110, 5, 70, 0.5);
+        font-family: monospace;
+        color: black;
+        text-align: center;
+        padding: 20px;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .relationship-clock-title {
+        font-size: 14px;
+        margin-bottom: 5px;
+        z-index: 1;
+    }
+
+    .relationship-clock-time {
+        font-size: 12px;
+        z-index: 1;
+    }
+
+    .liquid {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background: linear-gradient(180deg, #ff69b4, #ff1493);
+        transition: height 1s ease;
+        z-index: 0;
+    }
+
+    .markings {
+        position: absolute;
+        right: 10px;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 1;
+    }
+
+    .marking {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 10px;
+        height: 1px;
+        background-color: black;
+        z-index: 1;
+    }
+
+    .marking-label {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+        color: black;
+        z-index: 1;
+    }
+
+    .app-icon {
+        width: 5%;
+        height: auto;
+        margin: 15px 0;
+        cursor: pointer;
+        position: relative;
+        border-radius: 10px;
+    }
+
+    .app-icon img {
+        width: 100%;
+        height: auto;
+    }
+
+    .app-name {
+        font-size: 1vw;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 5px;
+    }
+
+    .app-container {
+        position: absolute;
+        top: 21%;
+        right: -13.5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    
+
+     .app-field {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 4;
+        border-radius: 5px;
+    }
+
+    .app-content {
+        width: 70%;
+        height: 70%;
+        right: 1%;
+        bottom: 3%;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        position: relative;
+        transform: scale(0);
+        transition: transform 0.5s ease;
+    }
+
+    .app-field.active .app-content {
+        transform: scale(1);
+    } 
+
+    .hidden {
+        display: none;
+    }
+
+    .fade-in {
+        animation: fadeIn 1s forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .computer-monitor {
+        width: 70vw;
+        height: 80vh;
+        background: linear-gradient(45deg, #ffd1dc, #f97c8f);
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        /* overflow: hidden; */
+    }
+
+    .heart-image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .music-app {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, #F33A5A, #F17F9E);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .song-display {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 30px;
+        border: 3px solid;
+        border-radius: 10px;
+    }
+
+    .song-display.red { border-color: red; }
+    .song-display.green { border-color: green; }
+    .song-display.blue { border-color: blue; }
+
+    .audio-controls {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress-container {
+        width: 100%;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .progress {
+        width: 0;
+        height: 100%;
+        background: white;
+        border-radius: 2px;
+        transition: width 0.1s linear;
+    }
+
+    .timestamp {
+        position: absolute;
+        bottom: -20px;
+        font-size: 12px;
+        color: white;
+    }
+
+    .current-time { left: 0; }
+    .duration { right: 0; }
+
+    .playback-controls {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+    }
+
+    .control-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .control-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .photo-app {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #c100bd, #8a2be2); /* Vibrant purple gradient */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+
+    .photo-app-left {
+        width: 40%;
+        color: #ff69b4; /* Hot pink */
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        padding-left: 5%;
+    }
+
+    .photo-app-right {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-right: 5%;
+    }
+
+    .photo-window {
+        width: 100%;
+        height: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        border: 5px solid #ff69b4; /* Hot pink frame */
+    }
+
+    .photo-window img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .photo-counter {
+        margin-top: 10px;
+        color: white;
+        font-size: 18px;
+    }
+
+    .photo-controls {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .photo-controls button {
+        background: linear-gradient(135deg, #ff69b4, #ff1493);
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .photo-controls button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .photo-message {
+        margin-top: 20px;
+        color: white;
+        font-size: 24px;
+        font-family: Arial, sans-serif;
+        opacity: 1;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .message-animate {
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    .photo-message.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+     .computer-monitor {
+        width: 70vw;
+        height: 80vh;
+        background: linear-gradient(45deg, #ffd1dc, #f97c8f);
+        border-radius: 10px;
+        position: relative;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .monitor-stand {
+        width: 20%;
+        height: 15vh;
+        background: linear-gradient(to right, #ffd1dc, #f98294);
+        position: absolute;
+        bottom: 0vh;
+        left: 40%;
+        clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+    }
+
+    .monitor-base {
+        width: 30%;
+        height: 2vh;
+        background: #ffb6c1;
+        position: absolute;
+        bottom: -2vh;
+        left: 35%;
+        border-radius: 5px;
+    } 
+
+    .screen-texture {
+        width: 95%;
+        height: 90%;
+        position: absolute;
+        top: 5%;
+        left: 2.5%;
+        background: url('macos.jpg') center/cover;
+        border-radius: 5px;
+    }
+
+    .terminal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: auto;
+        height: auto;
+        padding: 15px;
+        font-family: monospace;
+        background-color: #111;
+        color:#f77e9c;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(110, 5, 70, 0.5);
+        overflow: hidden;
+        transition: all 1s ease;
+        z-index: 2; /* Ensure the terminal is above the screen texture */
+    }
+
+    .terminal.collapsed {
+        transform: none;
+        overflow-y: auto;
+    }
+
+    .typing {
+        white-space: pre-wrap;
+        overflow: hidden;
+    }
+
+    #cursor {
+        display: inline-block;
+        width: 6px;
+        height: 10px;
+        background-color: #f77e9c;
+        margin-left: 2px;
+        animation: blink 0.8s steps(2, start) infinite;
+    }
+
+    .security-app {
+        width: 100%;
+        height: 100%;
+        background: #001f3f;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .quiz-title {
+        font-size: 36px;
+        color: #00ff00;
+        margin-bottom: 20px;
+    }
+
+    .start-button {
+        font-size: 24px;
+        color: #00ff00;
+        background: none;
+        border: 2px solid #00ff00;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .start-button:hover {
+        background: #00ff00;
+        color: #001f3f;
+    }
+
+    .question-block {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        color: #00ff00;
+    }
+
+    .question-text {
+        font-size: 28px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .answer-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        width: 100%;
+    }
+
+    .answer-button {
+        font-size: 18px;
+        color: #00ff00;
+        background: none;
+        border: 2px solid #00ff00;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .answer-button:hover {
+        background: #00ff00;
+        color: #001f3f;
+    }
+
+    .answer-button.correct {
+        background: #00ff00;
+        color: #001f3f;
+    }
+
+    .answer-button.incorrect {
+        background: #ff0000;
+        color: #001f3f;
+    }
+
+    .try-again {
+        font-size: 18px;
+        color: #ff0000;
+        margin-top: 10px;
+        display: none;
+    }
+
+
+    .myHeart-app {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #00ffcc, #ff00ff); /* Vibrant gradient */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: 'Courier New', Courier, monospace;
+        color: white;
+        text-align: center;
+    }
+
+    .myHeart-message {
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        font-size: 24px;
+        line-height: 1.5;
+        max-width: 80%;
+        animation: fadeIn 2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+</style>
+<script>
+    function updateDateTime() {
+        const now = new Date();
+        document.getElementById('datetime').textContent = 
+            now.toLocaleDateString() + ' ' + 
+            now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    }
+    setInterval(updateDateTime, 1000);
+
+    function updateRelationshipClock() {
+        const startDate = new Date('August 21, 2023 12:00:00');
+        const now = new Date();
+        const diff = now - startDate;
+
+        const minutes = Math.floor(diff / (1000 * 60));
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById('relationshipClockTime').textContent = 
+            `${minutes} minutes`;
+
+        const liquid = document.querySelector('.liquid');
+        const heightPercentage = (seconds / 60) * 100;
+        liquid.style.height = `${heightPercentage}%`;
+
+        if (heightPercentage >= 100) {
+            setTimeout(() => {
+                liquid.style.height = '0';
+            }, 1000);
+        }
+    }
+   
+    setInterval(updateRelationshipClock, 1000);
+
+    function openApp(appId) {
+        const appField = document.querySelector('.app-field');
+        const appContent = document.querySelector('.app-content');
+        
+        if (appId === 'musicApp') {
+            const musicApp = `
+                <div class="music-app">
+                    <div class="song-display red"></div>
+                    <div class="audio-controls">
+                        <div class="progress-container">
+                            <div class="progress-bar" id="progressBar">
+                                <div class="progress" id="progress"></div>
+                            </div>
+                            <span class="timestamp current-time" id="currentTime">0:00</span>
+                            <span class="timestamp duration" id="duration">0:00</span>
+                        </div>
+                        <div class="playback-controls">
+                            <button class="control-btn" onclick="prevSong()">⏮</button>
+                            <button class="control-btn" id="playPauseBtn" onclick="togglePlay()">▶</button>
+                            <button class="control-btn" onclick="nextSong()">⏭</button>
+                        </div>
+                    </div>
+                    <audio id="audioPlayer"></audio>
+                </div>`;
+            appContent.innerHTML = musicApp;
+            setTimeout(initializeMusicApp, 100);
+        } else if (appId === 'photosApp') {
+            const photosApp = `
+                <div class="photo-app">
+                    <div class="photo-app-left">
+                        <span id="photoAppIntro">Girl, I sure do love </span>
+                        <div id="photoMessage" class="photo-message">your smile</div>
+                    </div>
+                    <div class="photo-app-right">
+                        <div class="photo-window">
+                            <img id="photoWindowImage" src="Images/IMG_8885.PNG" alt="Photo">
+                        </div>
+                        <div class="photo-counter" id="photoCounter">1/12</div>
+                        <div class="photo-controls">
+                            <button onclick="prevPhoto()">❮</button>
+                            <button onclick="nextPhoto()">❯</button>
+                        </div>
+                    </div>
+                </div>`;
+            appContent.innerHTML = photosApp;
+            setTimeout(initializePhotosApp, 100);
+        } else if (appId === 'securityApp') {
+            const securityApp = `
+                <div class="security-app">
+                    <div class="quiz-title" id="quizTitle">Authentication Quiz</div>
+                    <button class="start-button" onclick="startQuiz()">Start</button>
+                    <div class="question-block" id="questionBlock">
+                        <div class="question-text" id="questionText"></div>
+                        <div class="answer-grid" id="answerGrid"></div>
+                        <div class="try-again" id="tryAgainMessage">Try again</div>
+                    </div>
+                </div>`;
+            appContent.innerHTML = securityApp;
+            setTimeout(initializeSecurityApp, 100);
+        } else if (appId === 'myHeartApp') {
+            const myHeartApp = `
+                <div class="myHeart-app">
+                    <div class="myHeart-message">
+                        Coming Soon - A State of the Art technology engineered by our greatest minds to produce myHeart, a 3D rendering of the most vital organ of the human body, allowing medical students, practitioners, and passionates all around to observe the heart in a new way.
+                    </div>
+                </div>`;
+            appContent.innerHTML = myHeartApp;
+        } else {
+            appContent.innerHTML = document.getElementById(appId).innerHTML;
+        }
+        
+        appField.style.display = 'flex';
+        setTimeout(() => {
+            appField.classList.add('active');
+        }, 10);
+    }
+
+
+    function closeApp() {
+        const appField = document.querySelector('.app-field');
+        appField.classList.remove('active');
+        setTimeout(() => {
+            appField.style.display = 'none';
+        }, 375);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const appField = document.querySelector('.app-field');
+        appField.addEventListener('click', (e) => {
+            if (e.target === appField) {
+                closeApp();
+            }
+        });
+    });
+
+    function showElements() {
+        const elements = document.querySelectorAll('.hidden');
+        elements.forEach(element => {
+            element.classList.remove('hidden');
+            element.classList.add('fade-in');
+        });
+    }
+
+    function initializeMusicApp() {
+        const audioPlayer = document.getElementById('audioPlayer');
+        const progressBar = document.getElementById('progressBar');
+        const progress = document.getElementById('progress');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        let currentSongIndex = 0;
+
+        const songs = [
+            { src: 'Frank Ocean - Seigfried.mp3', color: 'red' },
+            { src: 'Rosemary.mp3', color: 'green' },
+            { src: 'Mazzy Star - Fade Into You (Official Music Video).mp3', color: 'blue' }
+        ];
+
+        function loadSong(index) {
+            const song = songs[index];
+            audioPlayer.src = song.src;
+            document.querySelector('.song-display').className = `song-display ${song.color}`;
+        }
+
+        function togglePlay() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playPauseBtn.textContent = '⏸';
+            } else {
+                audioPlayer.pause();
+                playPauseBtn.textContent = '▶';
+            }
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+            playPauseBtn.textContent = '⏸';
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+            audioPlayer.play();
+            playPauseBtn.textContent = '⏸';
+        }
+
+        function updateProgress(e) {
+            const { duration, currentTime } = e.target;
+            const progressPercent = (currentTime / duration) * 100;
+            progress.style.width = `${progressPercent}%`;
+            
+            document.getElementById('currentTime').textContent = formatTime(currentTime);
+            document.getElementById('duration').textContent = formatTime(duration);
+        }
+
+        function setProgress(e) {
+            const width = progressBar.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Event listeners
+        audioPlayer.addEventListener('timeupdate', updateProgress);
+        audioPlayer.addEventListener('ended', nextSong);
+        progressBar.addEventListener('click', setProgress);
+
+        // Initialize first song
+        loadSong(0);
+
+        // Attach functions to window to ensure they are accessible
+        window.togglePlay = togglePlay;
+        window.nextSong = nextSong;
+        window.prevSong = prevSong;
+    }
+
+    function initializePhotosApp() {
+        const photos = [
+            { src: 'Images/IMG_8892.PNG', message: 'your smile' },
+            { src: 'Images/IMG_8899.PNG', message: 'your glare' },
+            { src: 'Images/IMG_8901.PNG', message: 'your bigotry' },
+            { src: 'Images/IMG_8924.jpg', message: 'your beauty' },
+            { src: 'Images/IMG_8890.PNG', message: 'your resting bitch face' },
+            { src: 'Images/IMG_8905.PNG', message: 'your charity' },
+            { src: 'Images/IMG_8893.PNG', message: 'your complement' },
+            { src: 'Images/IMG_8922.PNG', message: 'your boobs' },
+            { src: 'Images/IMG_8928.jpg', message: 'your eyes' },
+            { src: 'Images/IMG_8926.jpg', message: 'your sportiness' },
+            { src: 'Images/IMG_8925.jpg', message: 'your curves' },
+            { src: 'Images/IMG_8923.jpg', message: 'you for who you are' }
+        ];
+        let currentPhotoIndex = 0;
+
+        function updatePhotoViewer() {
+            const photoWindowImage = document.getElementById('photoWindowImage');
+            const photoMessage = document.getElementById('photoMessage');
+            const photoCounter = document.getElementById('photoCounter');
+
+            photoWindowImage.src = photos[currentPhotoIndex].src;
+            photoMessage.textContent = photos[currentPhotoIndex].message;
+            photoCounter.textContent = `${currentPhotoIndex + 1}/${photos.length}`;
+
+            // Remove old animation class
+            photoMessage.classList.remove('message-animate');
+            // Force reflow
+            void photoMessage.offsetWidth;
+            // Add animation class
+            photoMessage.classList.add('message-animate');
+        }
+
+        function nextPhoto() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            updatePhotoViewer();
+        }
+
+        function prevPhoto() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+            updatePhotoViewer();
+        }
+
+        // Initialize first photo
+        updatePhotoViewer();
+
+        // Attach functions to window to ensure they are accessible
+        window.nextPhoto = nextPhoto;
+        window.prevPhoto = prevPhoto;
+    }
+
+    function initializeSecurityApp() {
+        const questions = [
+            {
+                question: "What’s your go-to pasta dish?",
+                correctAnswer: "Rigatoni Bolognese",
+                answers: ["Rigatoni Bolognese", "Spaghetti Carbonara", "Fettuccine Alfredo", "Penne Arrabbiata"]
+            },
+            {
+                question: "How tall are you?",
+                correctAnswer: "5’2”",
+                answers: ["5’2”", "5’4”", "5’6”", "5’1”"]
+            },
+            {
+                question: "Where was our first date?",
+                correctAnswer: "Ice Skating Rink",
+                answers: ["Ice Skating Rink", "Coffee Shop", "Amusement Park", "Beach"]
+            },
+            {
+                question: "What’s your favorite species of animal?",
+                correctAnswer: "Aviary",
+                answers: ["Aviary", "Feline", "Canine", "Marine"]
+            },
+            {
+                question: "Which color is our future home named after?",
+                correctAnswer: "Hazel",
+                answers: ["Hazel", "Indigo", "Ivory", "Emerald"]
+            },
+            {
+                question: "What do you prefer?",
+                correctAnswer: "Laundry/natural",
+                answers: ["Laundry/natural"]
+            },
+            {
+                question: "What’s your future career?",
+                correctAnswer: "Cardiothoracic surgeon",
+                answers: ["Cardiothoracic surgeon", "Pediatrician", "Neuroscientist", "Oncologist"]
+            },
+            {
+                question: "Where do you want to get married?",
+                correctAnswer: "Seychelle",
+                answers: ["Seychelle", "Aruba", "Bali", "Santorini"]
+            },
+            {
+                question: "What’s the type of diamond you want for your ring?",
+                correctAnswer: "Princess Cut Diamond",
+                answers: ["Princess Cut Diamond", "Round Cut Diamond", "Cushion Cut Diamond", "Emerald Cut Diamond"]
+            },
+            {
+                question: "How did we meet?",
+                correctAnswer: "Ice skating",
+                answers: ["Ice skating", "At a concert", "Through friends", "At a coffee shop"]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function startQuiz() {
+            document.querySelector('.start-button').style.display = 'none';
+            document.getElementById('quizTitle').style.display = 'none';
+            document.getElementById('questionBlock').style.display = 'flex';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = question.question;
+            const answerGrid = document.getElementById('answerGrid');
+            answerGrid.innerHTML = '';
+            question.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.className = 'answer-button';
+                button.onclick = () => checkAnswer(answer);
+                answerGrid.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedAnswer) {
+            const question = questions[currentQuestionIndex];
+            const buttons = document.querySelectorAll('.answer-button');
+            if (selectedAnswer === question.correctAnswer) {
+                buttons.forEach(button => {
+                    if (button.textContent === selectedAnswer) {
+                        button.classList.add('correct');
+                    } else {
+                        button.classList.add('incorrect');
+                    }
+                });
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < questions.length) {
+                        showQuestion();
+                    } else {
+                        alert('Quiz completed!');
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('tryAgainMessage').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('tryAgainMessage').style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Attach functions to window to ensure they are accessible
+        window.startQuiz = startQuiz;
+        window.showQuestion = showQuestion;
+        window.checkAnswer = checkAnswer;
+    }
+</script>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Computer Interface</title>
+    <style>
+        .wall-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70vh;
+            background: linear-gradient(180deg, #ffd1dc, #fb9b9b);
+        }
+        
+        .table-surface {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30vh;
+            background: linear-gradient(180deg, #d44d78, #9e2d4f);
+            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.2);
+        }
+        body {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+         .computer-monitor {
+            width: 70vw;
+            height: 80vh;
+            background: linear-gradient(45deg, #ffd1dc, #f97c8f);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+           
+        }
+
+        .monitor-stand {
+            width: 20%;
+            height: 15vh;
+            background: linear-gradient(to right, #ffd1dc, #f98294);
+            position: absolute;
+            bottom: -15vh;
+            left: 40%;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+        }
+
+        .monitor-base {
+            width: 30%;
+            height: 2vh;
+            background: #ffb6c1;
+            position: absolute;
+            bottom: -17vh;
+            left: 35%;
+            border-radius: 5px;
+        }
+
+        .screen-texture {
+            width: 95%;
+            height: 90%;
+            position: absolute;
+            top: 5%;
+            left: 2.5%;
+            background: url('macos.jpg') center/cover;
+            border-radius: 5px;
+           
+        }
+
+        .terminal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: auto;
+            padding: 15px;
+            font-family: monospace;
+            background-color: #111;
+            color:#f77e9c;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(110, 5, 70, 0.5);
+            overflow: hidden;
+            transition: all 1s ease;
+           
+        }
+
+        .terminal.collapsed {
+            transform: none;
+            overflow-y: auto;
+        }
+
+        .typing {
+            white-space: pre-wrap;
+            overflow: hidden;
+        }
+
+        #cursor {
+            display: inline-block;
+            width: 6px;
+            height: 10px;
+            background-color: #f77e9c;
+            margin-left: 2px;
+            animation: blink 0.8s steps(2, start) infinite;
+        } 
+    </style>
+</head>
+<body>
+    <div class="wall-background"></div>
+    <div class="table-surface"></div>
+    <div class="computer-monitor">
+        <div class="status-bar">
+            <div id="datetime" class="status-item"></div>
+            <div class="status-item">
+                <div class="battery-icon">
+                    <div class="battery-level"></div>
+                    <div class="battery-cap"></div>
+                </div>
+            </div>
+        </div>
+        <div class="screen-texture">
+            <div class="app-field" onclick="closeApp()">
+                <div class="app-content" onclick="event.stopPropagation()"></div>
+            </div>
+        </div>
+    </div>
+    <div class="monitor-stand"></div>
+    <div class="monitor-base"></div>
+    <div class="relationship-clock hidden">
+        <div class="relationship-clock-title">You’ve been mine for:</div>
+        <div id="relationshipClockTime" class="relationship-clock-time"></div>
+        <div class="liquid"></div>
+        <div class="markings">
+            <div class="marking" style="top: 25%;"></div>
+            <div class="marking" style="top: 75%;"></div>
+        </div>
+        <div class="marking-label">30s</div>
+    </div>
+    <div id="typingEffect" class="terminal">
+        <div class="typing" id="terminalMessage"></div><span id="cursor"></span>
+    </div>
+    <div class="app-container hidden">
+        <div class="app-icon" onclick="openApp('securityApp')">
+            <img src="Cyber-Security-Transparent-Images-PNG.png" alt="Security">
+            <div class="app-name">Secure</div>
+        </div>
+        <div class="app-icon" onclick="openApp('musicApp')">
+            <img src="Apple-Music-Logo-PNG-Image-Transparent-Background.png" alt="Music">
+            <div class="app-name">Music</div>
+        </div>
+        <div class="app-icon" onclick="openApp('photosApp')">
+            <img src="photos-icon.png" alt="Photos">
+            <div class="app-name">Photos</div>
+        </div>
+        <div class="app-icon" onclick="openApp('myHeartApp')">
+            <img src="myHeart.png" alt="My Heart" class="heart-image">
+            <div class="app-name">Heart</div>
+        </div>
+    </div>
+    <div id="securityApp" class="hidden">
+        <!-- <div class="security-app">
+            <div class="quiz-title" id="quizTitle">Authentication Quiz</div>
+            <button class="start-button" onclick="startQuiz()">Start</button>
+            <div class="question-block" id="questionBlock">
+                <div class="question-text" id="questionText"></div>
+                <div class="answer-grid" id="answerGrid"></div>
+                <div class="try-again" id="tryAgainMessage">Try again</div>
+            </div>
+        </div> -->
+    </div>
+    <div id="musicApp" class="hidden"></div>
+    <div id="mouse-field" class="hidden">
+        <div class="mouse"></div>
+    </div>
+    <script>
+        const message = `       
+// Hey babe..
+// It's been approximately 490 days, 9 hours, 34 minutes and 4 seconds
+// since my willy became a Williamson...
+// Or in other words.. The day you said yes.
+
+
+// Since then I have been the proud owner
+// of the best girlfriend on earth..
+
+
+// However, getting here wasn't easy,
+// and many times I got close to losing what I love the most,
+// but we prevailed.
+
+
+// You see, my heart has changed.
+// Now you have written into it forever.
+// You've changed me and have slowly seen me grow into a man.
+
+
+// And I want to share with you,
+// But first!
+// You need to gamble away your love,
+// reliving the countless chances you gave me,
+// until you have enough to see the depths of my heart!
+// Following this message will be greated with a great machine, manifactured for you, running Nicole OS. 
+// Use this machine along with its uniquely tailored UI to gamble away your love.`;
+
+
+        const typingSpeed = 1; // Speed of typing effect in ms
+        let index = 0;
+        const terminal = document.getElementById("terminalMessage");
+        const typingEffect = document.getElementById("typingEffect");
+        const cursor = document.getElementById("cursor");
+        const container = document.querySelector(".container");
+
+
+        /* filepath: /c:/Users/SUNYLoaner/Niu/index.html */
+        function typeMessage() {
+            if (index < message.length) {
+                terminal.textContent += message[index];
+                index++;
+                terminal.appendChild(cursor);
+                setTimeout(typeMessage, typingSpeed);
+            } else {
+                setTimeout(() => {
+                    typingEffect.style.transition = "all 1s ease";
+                    typingEffect.style.position = "absolute";
+                    typingEffect.style.width = "38%";
+                    typingEffect.style.height = "27%";
+                    typingEffect.style.top = "150px";
+                    typingEffect.style.left = "260px";
+                    typingEffect.classList.add("collapsed");
+                    showElements();
+                }, 1000);
+            }
+        }
+
+        typeMessage();
+    </script>
+</body>
+</html>
