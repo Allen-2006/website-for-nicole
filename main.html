@@ -3,6 +3,11 @@
     /* Color container
     #cf00ac
     */
+
+    * {
+        caret-color: transparent;
+        }
+
     body {
         margin: 0;
         padding: 0;
@@ -346,6 +351,7 @@
         color: #ff69b4; /* Hot pink */
         font-size: 24px;
         font-family: Arial, sans-serif;
+        font-weight: bold;
         padding-left: 5%;
     }
 
@@ -363,53 +369,58 @@
         border-radius: 10px;
         overflow: hidden;
         position: relative;
-        border: 5px solid #ff69b4; /* Hot pink frame */
+        border: 5px solid #1b084e; /* Hot pink frame */
     }
 
     .photo-window img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 10px;
-    }
-
-    .photo-counter {
-        margin-top: 10px;
-        color: white;
-        font-size: 18px;
+        border-radius: 5px;
     }
 
     .photo-controls {
         display: flex;
         justify-content: space-between;
         width: 100%;
-        margin-top: 10px;
+        margin-top: 20px;
     }
 
-    .photo-controls button {
-        background: linear-gradient(135deg, #ff69b4, #ff1493);
+    /* .photo-controls button {
+        --button_radius: 0.75em;
+        --button_color: #e8e8e8;
+        --button_outline_color: #000000;
+        font-size: 17px;
+        font-weight: bold;
         border: none;
-        color: white;
-        font-size: 24px;
         cursor: pointer;
-        padding: 10px;
-        border-radius: 50%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+        border-radius: var(--button_radius);
+        background: var(--button_outline_color);
+    } */
 
-    .photo-controls button:hover {
+    /* .photo-controls button:hover {
         transform: scale(1.1);
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
+    } */
 
     .photo-message {
         margin-top: 20px;
-        color: white;
         font-size: 24px;
         font-family: Arial, sans-serif;
         opacity: 1;
     }
+
+    .photo-message.yellow { color: yellow; }
+    .photo-message.orange { color: orange; }
+    .photo-message.black { color: black; }
+    .photo-message.blue { color: blue; }
+    .photo-message.red { color: red; }
+    .photo-message.green { color: green; }
+    .photo-message.beige { color: beige; }
+    .photo-message.mahogany { color: #C04000; }
+    .photo-message.silver { color: silver; }
+    .photo-message.peach { color: #FFDAB9; }
+    .photo-message.dark-pink { color: #FF1493; }
 
     @keyframes fadeInUp {
         from {
@@ -431,6 +442,67 @@
         transform: translateY(0);
     }
 
+    button {
+            /* Variables */
+        --button_radius: 0.75em;
+        --button_color: #e8e8e8;
+        --button_outline_color: #1b084e;
+        font-size: 17px;
+        font-weight: bold;
+        border: none;
+        border-radius: var(--button_radius);
+        background: var(--button_outline_color);
+        }
+
+    .button_top {
+            /* New variables */
+        --gradient-color-1: #8360c3;
+        --gradient-color-2: #2ebf91;
+        display: block;
+        box-sizing: border-box;
+        border: 2px solid var(--button_outline_color);
+        border-radius: var(--button_radius);
+        padding: 0.75em 1.5em;
+        background: linear-gradient(to bottom, var(--gradient-color-1), var(--gradient-color-2));
+        color: var(--button_outline_color);
+        transform: translateY(-0.2em);
+        transition: transform 0.1s ease;
+        width: 110%;
+        /*right: 30%;*/
+        }
+
+    button:hover .button_top {
+            /* Pull the button upwards when hovered */
+        transform: translateY(-0.33em);
+        }
+
+    button:active .button_top {
+            /* Push the button downwards when pressed */
+        transform: translateY(0);
+        transform: translateX(-0.33em)
+        }
+
+
+    /* @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .message-animate {
+        animation: fadeInUp 1s ease-in-out;
+    }
+
+    .photo-message.visible {
+        opacity: 1;
+        transform: translateY(0);
+    } */
+
      .computer-monitor {
         width: 70vw;
         height: 80vh;
@@ -439,6 +511,7 @@
         position: relative;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        
     }
 
     .monitor-stand {
@@ -511,7 +584,7 @@
     .security-app {
         width: 100%;
         height: 100%;
-        background: #001f3f;
+        background: /*#001f3f;*/ linear-gradient(135deg, #00060b, #343536); /* Vibrant gradient */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -523,15 +596,15 @@
 
     .quiz-title {
         font-size: 36px;
-        color: #00ff00;
+        color: #ff0000;
         margin-bottom: 20px;
     }
 
     .start-button {
         font-size: 24px;
-        color: #00ff00;
+        color: #ff0000;
         background: none;
-        border: 2px solid #00ff00;
+        border: 2px solid #ff0000;
         padding: 10px 20px;
         cursor: pointer;
         border-radius: 5px;
@@ -539,7 +612,7 @@
     }
 
     .start-button:hover {
-        background: #00ff00;
+        background: #ff0000;
         color: #001f3f;
     }
 
@@ -548,7 +621,7 @@
         flex-direction: column;
         align-items: center;
         text-align: center;
-        color: #00ff00;
+        color: #ff0000;
     }
 
     .question-text {
@@ -566,9 +639,9 @@
 
     .answer-button {
         font-size: 18px;
-        color: #00ff00;
+        color: #ff0000;
         background: none;
-        border: 2px solid #00ff00;
+        border: 2px solid #ff0000;
         padding: 10px;
         cursor: pointer;
         border-radius: 5px;
@@ -576,17 +649,18 @@
     }
 
     .answer-button:hover {
-        background: #00ff00;
+        background: #ff0000;
         color: #001f3f;
     }
 
     .answer-button.correct {
         background: #00ff00;
+        border: 2px solid #00ff00;
         color: #001f3f;
     }
 
     .answer-button.incorrect {
-        background: #ff0000;
+        background: #ff0000a5;
         color: #001f3f;
     }
 
@@ -667,6 +741,7 @@
     }
    
     setInterval(updateRelationshipClock, 1000);
+    
 
     function openApp(appId) {
         const appField = document.querySelector('.app-field');
@@ -674,24 +749,24 @@
         
         if (appId === 'musicApp') {
             const musicApp = `
-                <div class="music-app">
-                    <div class="song-display red"></div>
-                    <div class="audio-controls">
-                        <div class="progress-container">
-                            <div class="progress-bar" id="progressBar">
-                                <div class="progress" id="progress"></div>
+                    <div class="music-app">
+                        <div class="song-display red"></div>
+                        <div class="audio-controls">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progressBar">
+                                    <div class="progress" id="progress"></div>
+                                </div>
+                                <span class="timestamp current-time" id="currentTime">0:00</span>
+                                <span class="timestamp duration" id="duration">0:00</span>
                             </div>
-                            <span class="timestamp current-time" id="currentTime">0:00</span>
-                            <span class="timestamp duration" id="duration">0:00</span>
+                            <div class="playback-controls">
+                                <button class="control-btn" onclick="prevSong()">⏮</button>
+                                <button class="control-btn" id="playPauseBtn" onclick="togglePlay()">▶</button>
+                                <button class="control-btn" onclick="nextSong()">⏭</button>
+                            </div>
                         </div>
-                        <div class="playback-controls">
-                            <button class="control-btn" onclick="prevSong()">⏮</button>
-                            <button class="control-btn" id="playPauseBtn" onclick="togglePlay()">▶</button>
-                            <button class="control-btn" onclick="nextSong()">⏭</button>
-                        </div>
-                    </div>
-                    <audio id="audioPlayer"></audio>
-                </div>`;
+                        <audio id="audioPlayer"></audio>
+                    </div>`;
             appContent.innerHTML = musicApp;
             setTimeout(initializeMusicApp, 100);
         } else if (appId === 'photosApp') {
@@ -705,10 +780,9 @@
                         <div class="photo-window">
                             <img id="photoWindowImage" src="Images/IMG_8885.PNG" alt="Photo">
                         </div>
-                        <div class="photo-counter" id="photoCounter">1/12</div>
                         <div class="photo-controls">
-                            <button onclick="prevPhoto()">❮</button>
-                            <button onclick="nextPhoto()">❯</button>
+                            <button> <span class="button_top" onclick="prevPhoto()"> Prev </span> </button>
+                            <button> <span class="button_top" onclick="nextPhoto()"> Next </span> </button>
                         </div>
                     </div>
                 </div>`;
@@ -745,7 +819,6 @@
         }, 10);
     }
 
-
     function closeApp() {
         const appField = document.querySelector('.app-field');
         appField.classList.remove('active');
@@ -756,11 +829,14 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         const appField = document.querySelector('.app-field');
-        appField.addEventListener('click', (e) => {
+        appField.addEventListener('click', (e) => { 
             if (e.target === appField) {
                 closeApp();
             }
         });
+
+        // Initialize music app on page load
+        initializeMusicApp();
     });
 
     function showElements() {
@@ -773,6 +849,7 @@
 
     function initializeMusicApp() {
         const audioPlayer = document.getElementById('audioPlayer');
+        const persistentAudioPlayer = document.getElementById('persistentAudioPlayer');
         const progressBar = document.getElementById('progressBar');
         const progress = document.getElementById('progress');
         const playPauseBtn = document.getElementById('playPauseBtn');
@@ -787,15 +864,18 @@
         function loadSong(index) {
             const song = songs[index];
             audioPlayer.src = song.src;
+            persistentAudioPlayer.src = song.src;
             document.querySelector('.song-display').className = `song-display ${song.color}`;
         }
 
         function togglePlay() {
             if (audioPlayer.paused) {
                 audioPlayer.play();
+                persistentAudioPlayer.play();
                 playPauseBtn.textContent = '⏸';
             } else {
                 audioPlayer.pause();
+                persistentAudioPlayer.pause();
                 playPauseBtn.textContent = '▶';
             }
         }
@@ -804,6 +884,7 @@
             currentSongIndex = (currentSongIndex + 1) % songs.length;
             loadSong(currentSongIndex);
             audioPlayer.play();
+            persistentAudioPlayer.play();
             playPauseBtn.textContent = '⏸';
         }
 
@@ -811,6 +892,7 @@
             currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
             loadSong(currentSongIndex);
             audioPlayer.play();
+            persistentAudioPlayer.play();
             playPauseBtn.textContent = '⏸';
         }
 
@@ -828,6 +910,7 @@
             const clickX = e.offsetX;
             const duration = audioPlayer.duration;
             audioPlayer.currentTime = (clickX / width) * duration;
+            persistentAudioPlayer.currentTime = (clickX / width) * duration;
         }
 
         function formatTime(seconds) {
@@ -852,29 +935,28 @@
 
     function initializePhotosApp() {
         const photos = [
-            { src: 'Images/IMG_8892.PNG', message: 'your smile' },
-            { src: 'Images/IMG_8899.PNG', message: 'your glare' },
-            { src: 'Images/IMG_8901.PNG', message: 'your bigotry' },
-            { src: 'Images/IMG_8924.jpg', message: 'your beauty' },
-            { src: 'Images/IMG_8890.PNG', message: 'your resting bitch face' },
-            { src: 'Images/IMG_8905.PNG', message: 'your charity' },
-            { src: 'Images/IMG_8893.PNG', message: 'your complement' },
-            { src: 'Images/IMG_8922.PNG', message: 'your boobs' },
-            { src: 'Images/IMG_8928.jpg', message: 'your eyes' },
-            { src: 'Images/IMG_8926.jpg', message: 'your sportiness' },
-            { src: 'Images/IMG_8925.jpg', message: 'your curves' },
-            { src: 'Images/IMG_8923.jpg', message: 'you for who you are' }
+            { src: 'Images/IMG_8892.PNG', message: 'your smile', color: 'yellow' },
+            { src: 'Images/IMG_8899.PNG', message: 'your glare', color: 'orange' },
+            { src: 'Images/IMG_8901.PNG', message: 'your bigotry', color: 'black' },
+            { src: 'Images/IMG_8924.jpg', message: 'your beauty', color: 'blue' },
+            { src: 'Images/IMG_8890.PNG', message: 'your resting bitch face', color: 'red' },
+            { src: 'Images/IMG_8905.PNG', message: 'your charity', color: 'green' },
+            { src: 'Images/IMG_8893.PNG', message: 'your complement', color: 'beige' },
+            { src: 'Images/IMG_8922.PNG', message: 'your boobs', color: 'mahogany' },
+            { src: 'Images/IMG_8928.jpg', message: 'your eyes', color: 'silver' },
+            { src: 'Images/IMG_8926.jpg', message: 'your sportiness', color: 'blue' },
+            { src: 'Images/IMG_8925.jpg', message: 'your curves', color: 'peach' },
+            { src: 'Images/IMG_8923.jpg', message: 'you for who you are', color: 'dark-pink' }
         ];
         let currentPhotoIndex = 0;
 
         function updatePhotoViewer() {
             const photoWindowImage = document.getElementById('photoWindowImage');
             const photoMessage = document.getElementById('photoMessage');
-            const photoCounter = document.getElementById('photoCounter');
 
             photoWindowImage.src = photos[currentPhotoIndex].src;
             photoMessage.textContent = photos[currentPhotoIndex].message;
-            photoCounter.textContent = `${currentPhotoIndex + 1}/${photos.length}`;
+            photoMessage.className = `photo-message ${photos[currentPhotoIndex].color}`;
 
             // Remove old animation class
             photoMessage.classList.remove('message-animate');
@@ -917,22 +999,22 @@
             {
                 question: "Where was our first date?",
                 correctAnswer: "Ice Skating Rink",
-                answers: ["Ice Skating Rink", "Coffee Shop", "Amusement Park", "Beach"]
+                answers: ["Coffee Shop", "Amusement Park", "Beach", "Ice Skating Rink"]
             },
             {
                 question: "What’s your favorite species of animal?",
                 correctAnswer: "Aviary",
-                answers: ["Aviary", "Feline", "Canine", "Marine"]
+                answers: ["Feline", "Aviary", "Canine", "Marine"]
             },
             {
                 question: "Which color is our future home named after?",
                 correctAnswer: "Hazel",
-                answers: ["Hazel", "Indigo", "Ivory", "Emerald"]
+                answers: ["Indigo", "Ivory", "Emerald", "Hazel"]
             },
             {
                 question: "What do you prefer?",
-                correctAnswer: "Laundry/natural",
-                answers: ["Laundry/natural"]
+                correctAnswer: "Natural",
+                answers: ["Laundry", "Natural"]
             },
             {
                 question: "What’s your future career?",
@@ -942,7 +1024,7 @@
             {
                 question: "Where do you want to get married?",
                 correctAnswer: "Seychelle",
-                answers: ["Seychelle", "Aruba", "Bali", "Santorini"]
+                answers: ["Aruba", "Bali", "Seychelle", "Santorini"]
             },
             {
                 question: "What’s the type of diamond you want for your ring?",
@@ -1017,7 +1099,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pink Computer Interface</title>
+    <title>iNicole</title>
     <style>
         .wall-background {
             position: fixed;
@@ -1037,6 +1119,7 @@
             background: linear-gradient(180deg, #d44d78, #9e2d4f);
             box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.2);
         }
+
         body {
             background-color: white;
             display: flex;
@@ -1054,26 +1137,6 @@
             position: relative;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
            
-        }
-
-        .monitor-stand {
-            width: 20%;
-            height: 15vh;
-            background: linear-gradient(to right, #ffd1dc, #f98294);
-            position: absolute;
-            bottom: -15vh;
-            left: 40%;
-            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-        }
-
-        .monitor-base {
-            width: 30%;
-            height: 2vh;
-            background: #ffb6c1;
-            position: absolute;
-            bottom: -17vh;
-            left: 35%;
-            border-radius: 5px;
         }
 
         .screen-texture {
@@ -1123,11 +1186,17 @@
             margin-left: 2px;
             animation: blink 0.8s steps(2, start) infinite;
         } 
+        /* Create a start animation: Create an ai generated logo, power button should be on the monitor stand, 
+        when the power button is clicked, the monitor should turn on and the logo should appear on the screen, wih a black foreground
+        */
     </style>
 </head>
 <body>
+    <audio id="persistentAudioPlayer"></audio>
     <div class="wall-background"></div>
     <div class="table-surface"></div>
+    <div class="monitor-base"></div>
+    <div class="monitor-stand"></div>
     <div class="computer-monitor">
         <div class="status-bar">
             <div id="datetime" class="status-item"></div>
@@ -1144,8 +1213,6 @@
             </div>
         </div>
     </div>
-    <div class="monitor-stand"></div>
-    <div class="monitor-base"></div>
     <div class="relationship-clock hidden">
         <div class="relationship-clock-title">You’ve been mine for:</div>
         <div id="relationshipClockTime" class="relationship-clock-time"></div>
