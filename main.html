@@ -867,7 +867,7 @@
         width: 60px !important;
         height: 60px !important;
         position: absolute;
-        left: 25%;
+        left: 30%;
         transform: translateY(-60%);
         display: none;
     }
@@ -884,6 +884,7 @@
         margin: 5px 0;
         align-self: flex-start;
     }
+
 </style>
 <script>
     function updateDateTime() {
@@ -1033,7 +1034,6 @@
 
     function initializeMusicApp() {
         const audioPlayer = document.getElementById('audioPlayer');
-        const persistentAudioPlayer = document.getElementById('persistentAudioPlayer');
         const progressBar = document.getElementById('progressBar');
         const progress = document.getElementById('progress');
         const playPauseBtn = document.getElementById('playPauseBtn');
@@ -1060,7 +1060,6 @@
         function loadSong(index) {
             const song = songs[index];
             audioPlayer.src = song.src;
-            persistentAudioPlayer.src = song.src;
             const songDisplay = document.querySelector('.song-display');
             songDisplay.className = `song-display ${song.color}`;
             songDisplay.innerHTML = `<img src="${song.img}" alt="Album Art">`;
@@ -1069,11 +1068,9 @@
         function togglePlay() {
             if (audioPlayer.paused) {
                 audioPlayer.play();
-                persistentAudioPlayer.play();
                 playPauseBtn.textContent = '⏸';
             } else {
                 audioPlayer.pause();
-                persistentAudioPlayer.pause();
                 playPauseBtn.textContent = '▶';
             }
         }
@@ -1082,7 +1079,6 @@
             currentSongIndex = (currentSongIndex + 1) % songs.length;
             loadSong(currentSongIndex);
             audioPlayer.play();
-            persistentAudioPlayer.play();
             playPauseBtn.textContent = '⏸';
         }
 
@@ -1090,7 +1086,6 @@
             currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
             loadSong(currentSongIndex);
             audioPlayer.play();
-            persistentAudioPlayer.play();
             playPauseBtn.textContent = '⏸';
         }
 
@@ -1108,7 +1103,6 @@
             const clickX = e.offsetX;
             const duration = audioPlayer.duration;
             audioPlayer.currentTime = (clickX / width) * duration;
-            persistentAudioPlayer.currentTime = (clickX / width) * duration;
         }
 
         function formatTime(seconds) {
@@ -1231,8 +1225,8 @@
             },
             {
                 question: "How did we meet?",
-                correctAnswer: "Ice skating",
-                answers: ["Ice skating", "At a concert", "Through friends", "At a coffee shop"]
+                correctAnswer: "Your nuts",
+                answers: ["Your nuts", "At a concert", "Through friends", "At a coffee shop"]
             }
         ];
 
@@ -1412,7 +1406,6 @@
     function toggleScreen() {
         const screenTexture = document.getElementById('screenTexture');
         const audioPlayer = document.getElementById('audioPlayer');
-        const persistentAudioPlayer = document.getElementById('persistentAudioPlayer');
         const playPauseBtn = document.getElementById('playPauseBtn');
         
         screenTexture.classList.toggle('screen-off');
@@ -1420,7 +1413,6 @@
         // Pause audio when screen turns off
         if (screenTexture.classList.contains('screen-off')) {
             if (audioPlayer) audioPlayer.pause();
-            if (persistentAudioPlayer) persistentAudioPlayer.pause();
             if (playPauseBtn) playPauseBtn.textContent = '▶';
         }
         
@@ -1445,7 +1437,13 @@
             left: 0;
             width: 100%;
             height: 70vh;
-            background: linear-gradient(180deg, #ffd1dc, #fb9b9b);
+            background: linear-gradient(
+            45deg, 
+            #89CFF0,  /* Baby blue */
+            #C1E3FF,  /* Light sky blue */
+            #FFB6C1,  /* Light pink */
+            #FFC0CB   /* Pink */
+        );
         }
         
         .table-surface {
@@ -1454,8 +1452,11 @@
             left: 0;
             width: 100%;
             height: 30vh;
-            background: linear-gradient(180deg, #d44d78, #9e2d4f);
-            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(219, 112, 147, 0.2);  /* Pale violet red with low opacity */
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 -10px 20px rgba(0, 0, 0, 0.15),
+                inset 0 2px 10px rgba(255, 255, 255, 0.1);
         }
 
         body {
@@ -1465,6 +1466,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow-x: hidden;
         }
 
          .computer-monitor {
@@ -1602,7 +1604,7 @@
     </style>
 </head>
 <body>
-    <audio id="persistentAudioPlayer"></audio>
+    <audio id="audioPlayer"></audio>
     <div class="wall-background"></div>
     <div class="table-surface"></div>
     <div class="monitor-base"></div>
@@ -1711,7 +1713,7 @@
 // Enjoy this great machine along with its uniquely tailored UI, manifactured for Nicole, running Nicole OS.`;
 
 
-        const typingSpeed = 1; // Speed of typing effect in ms
+        const typingSpeed = 25; // Speed of typing effect in ms
         let index = 0;
         const terminal = document.getElementById("terminalMessage");
         const typingEffect = document.getElementById("typingEffect");
